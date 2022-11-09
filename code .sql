@@ -1,3 +1,5 @@
+--- After Uploading the file from the drive taking a glance of table
+
 USE E_COMMERCE;
 	SELECT * FROM Customers;
 	SELECT * FROM Orders;
@@ -6,7 +8,12 @@ USE E_COMMERCE;
 	SELECT * FROM OrderDetails;
 	SELECT * FROM Shippers;
 	SELECT * FROM Payments;
----1 A
+	
+--- Changing Data type to datetime format 
+
+Alter Table Customers ALTER COLUMN DateEntered datetime
+
+---1.A
 WITH CTE AS(
 	SELECT CustomerID,COUNT(CustomerID) AS Ordered FROM Orders WHERE (DATEDIFF(MONTH,OrderDate,GETDATE())<=6)
 	GROUP BY CustomerID HAVING COUNT(CustomerID)=1)
@@ -96,16 +103,3 @@ order by total_product_qty desc;
 		SELECT O1.OrderDate,COUNT(O2.OrderID) AS Orders_placed FROM Orders AS O1 JOIN  Orders AS O2 
 										ON O1.CustomerID=O2.CustomerID AND O1.OrderDate>=O2.OrderDate
 										WHERE YEAR(O1.OrderDate)=2020 GROUP BY O1.OrderDate ORDER BY O1.OrderDate;
-USE DPP8
-		CREATE TABLE Table_1 (
-		A TINYINT NULL,
-		B NVARCHAR(2) NOT NULL
-		);
-		CREATE TABLE Table_2 (
-		A TINYINT NULL,
-		C NVARCHAR(2) NOT NULL
-		);
-		INSERT INTO Table_1 (A,B) VALUES (1,'B1'),(1,'B2'),(1,'B3'),(3,'B4'),(3,'B5'),(5,'B6'),(5,'B7'),(5,'B8'),(Null,'B9');
-		INSERT INTO Table_2 (A,C) VALUES (1,'C1'),(1,'C2'),(3,'C3'),(3,'C4'),(3,'C5'),(NULL,'C6'),(4,'C7'),(5,'C8'),(NULL,'C9');
-
-		SELECT * FROM Table_1 CROSS JOIN Table_2 ;
