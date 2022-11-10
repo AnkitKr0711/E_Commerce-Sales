@@ -5,4 +5,6 @@ E_commerce_sales Dataset is a combination of 7 tables name as
 
 Analyzing the data of your online retail stores. This dataset shows everything about what’s working and what’s not working in your online store.Comprehending the big picture will help you see the patterns, understand the purchasing behavior of your online customers, and where we are lagging behind in competitive market. Hence getting a chance to polish your strategies by recognizing the bottlenecks of your business
 
+Latter all this table are exported and analyse using visualization tools 
+
 Codeing Platform :- Microsoft SQL Server Management
