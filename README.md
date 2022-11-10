@@ -7,7 +7,7 @@ Analyzing the data of your online retail stores. This dataset shows everything a
 
 ![sql](https://user-images.githubusercontent.com/111516810/201013937-ee1fb078-2a0b-4675-ba5f-3ec50ed604d6.jpg)
 
-                                          Dataset Schema
+                                                   Dataset Schema
 
 Different type of query is runned.Latter all this table are exported and analyse using visualization tools to get better insight of the data
 
