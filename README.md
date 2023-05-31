@@ -11,4 +11,4 @@ Analyzing the data of your online retail stores. This dataset shows everything a
 
 Different type of query is runned.Latter all this table are exported and analyse using visualization tools to get better insight of the data
 
-Codeing Platform :- Microsoft SQL Server Management.
+Codeing Platform :- Microsoft SQL Server Management, Python, Power BI/Tableau
