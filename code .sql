@@ -104,3 +104,13 @@ Alter Table Customers ALTER COLUMN DateEntered datetime
 	select customerID, OrderDate, next_date, sum(continuity)over(partition by CustomerID order by OrderDate)as num 
 	from seq where continuity=1)
 	select * from final where num>=2
+---- 12 top 5 customer for each category which join in 2021 
+	with cte1 as(
+	select p.Category_ID,o.CustomerID,count(o.CustomerID) as bought 
+	from Products as p join OrderDetails as od on p.ProductID=od.ProductID join Orders as o on o.OrderID=od.OrderID
+	where o.CustomerID in (select CustomerID from Customers where year(DateEntered)=year(getdate())-2)
+	group by p.Category_ID, o.CustomerID
+	), cte2 as(
+	select Category_ID, CustomerID, bought, dense_rank()over(partition by Category_ID order by bought desc)as rankg from cte1
+	)select * from cte2 where rankg <=5
+
