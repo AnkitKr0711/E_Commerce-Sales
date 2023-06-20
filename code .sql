@@ -93,3 +93,14 @@ Alter Table Customers ALTER COLUMN DateEntered datetime
 ----1O Finding the total sum and cumlative average for each customer in year 2021
 	SELECT MONTH(OrderDate)AS Months_2021,CustomerID,SUM(Total_order_amount), AVG(SUM(Total_order_amount))OVER(PARTITION BY MONTH(OrderDate) ORDER BY CustomerID) AS CUML_AVG
 	FROM Orders WHERE YEAR(OrderDate)=2021 GROUP BY CustomerID,MONTH(OrderDate) ORDER BY MONTH(OrderDate);
+---- 11 customer with 2 day or more continuty
+	with cte as(
+	select customerID,OrderDate, lead(OrderDate)over(partition by CustomerID order by OrderDate)as next_date from Orders
+	),
+	seq as(
+	select customerID, OrderDate, next_date, iif(next_date-OrderDate=1,1,0)as continuity from cte
+	),
+	final as(
+	select customerID, OrderDate, next_date, sum(continuity)over(partition by CustomerID order by OrderDate)as num 
+	from seq where continuity=1)
+	select * from final where num>=2
