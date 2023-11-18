@@ -10,4 +10,6 @@ E_commerce_sales Dataset is a combination of 8 tables name as
 
 Different types of file system store in the different playtform is integrated to one single platform Azure Datalake storage system
 
-Codeing Platform :- Microsoft SQL Server Management, Azure Data Lake
+Design the Database schema and then populate the data from Datalake to schema table
+
+Codeing Platform :- Microsoft SQL Server Management, Azure Data Lake, Azure DataFactory
