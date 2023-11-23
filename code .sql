@@ -60,8 +60,8 @@ Alter Table Customers ALTER COLUMN DateEntered datetime
 	WHERE YEAR(O1.OrderDate)=2021 GROUP BY O1.OrderDate ORDER BY O1.OrderDate;
 	
 ---1K Creating a matrix where finding total amount of customer for every month in 2020 and comparing to 2021
-	SELECT MONTH(DateEntered) AS Months,YEAR(DateEntered) AS Years,CustomerID INTO #Temp_Table2  FROM Customers;
-	SELECT Months,[2020],[2021] FROM #Temp_Table2
+	SELECT MONTH(DateEntered) AS Months,YEAR(DateEntered) AS Years,CustomerID INTO Temp_Table2  FROM Customers;
+	SELECT Months,[2020],[2021] FROM Temp_Table2
 		PIVOT(
 		COUNT(CustomerID) FOR Years IN ([2020],[2021])
 		) AS pivotal_table;
@@ -81,7 +81,7 @@ Alter Table Customers ALTER COLUMN DateEntered datetime
 	INTO #Tempo12 FROM Orders AS O JOIN OrderDetails AS OD ON O.OrderID=OD.OrderID JOIN Products AS P ON P.ProductID=OD.ProductID
 	WHERE YEAR(O.OrderDate)=2020
 	
-	SELECT [First_Qutr],[Second_Qutr],[Third_Qutr],[Fourth_Qutr] FROM #Tempo12 
+	SELECT [First_Qutr],[Second_Qutr],[Third_Qutr],[Fourth_Qutr] FROM Tempo12 
 	PIVOT(
 		SUM(Total_order_amount) FOR Qutr IN ([First_Qutr],[Second_Qutr],[Third_Qutr],[Fourth_Qutr])
 	)AS Pivotal_table1
