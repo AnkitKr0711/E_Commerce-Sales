@@ -23,7 +23,7 @@ Alter Table Customers ALTER COLUMN DateEntered datetime
 	
 ---1C Finding the maximum number of order placed and minimum number of Order placed by each customers in 2021 year
 	SELECT P.Category_ID, COUNT(O.OrderID) AS Order_placed INTO Tempo FROM Category AS C JOIN Products AS P  ON C.CategoryID=P.Category_ID
-	JOIN OrderDetails AS OD ON P.ProductID=OD.ProductID JOIN Orders AS O ON OD.OrderID=O.OrderIDWHERE YEAR(O.OrderDate)=2021 GROUP BY  P.Category_ID ORDER BY Order_placed
+	JOIN OrderDetails AS OD ON P.ProductID=OD.ProductID JOIN Orders AS O ON OD.OrderID=O.OrderID WHERE YEAR(O.OrderDate)=2021 GROUP BY  P.Category_ID ORDER BY Order_placed
 	SELECT Category_ID,MAX(Order_placed),MIN(Order_placed) FROM Tempo GROUP BY Category_ID;
 	
 ---1D Finding the average time taken by the divelery partner to give asuccesfull delivery
