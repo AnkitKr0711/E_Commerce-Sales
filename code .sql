@@ -97,7 +97,7 @@ WITH monthly_customer_sales AS ( SELECT MONTH(OrderDate) AS Months_2021, Custome
 	FROM monthly_customer_sales ORDER BY CustomerID, Months_2021;
 ---- 11 customer with 2 day or more continuty
 	with cte as(
-	select customerID,OrderDate, lead(OrderDate)over(partition by CustomerID order by OrderDate)as next_date from Orders
+	select customerID,OrderDate, lead(OrderDate, 1)over(partition by CustomerID order by OrderDate)as next_date from Orders
 	),
 	seq as(
 	select customerID, OrderDate, next_date, iif(next_date-OrderDate=1,1,0)as continuity from cte
