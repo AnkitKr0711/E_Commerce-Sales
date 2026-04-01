@@ -91,8 +91,10 @@ Alter Table Customers ALTER COLUMN DateEntered datetime
 	FROM Orders GROUP BY CustomerID,Total_order_amount,OrderDate ORDER BY CustomerID;
 	
 ----1O Finding the total sum and cumlative average for each customer in year 2021
-	SELECT MONTH(OrderDate)AS Months_2021,CustomerID,SUM(Total_order_amount), AVG(SUM(Total_order_amount))OVER(PARTITION BY MONTH(OrderDate) ORDER BY CustomerID) AS CUML_AVG
-	FROM Orders WHERE YEAR(OrderDate)=2021 GROUP BY CustomerID,MONTH(OrderDate) ORDER BY MONTH(OrderDate);
+WITH monthly_customer_sales AS ( SELECT MONTH(OrderDate) AS Months_2021, CustomerID,SUM(Total_order_amount) AS total_amount
+    FROM Orders WHERE YEAR(OrderDate) = 2021 GROUP BY  CustomerID,  MONTH(OrderDate)
+)SELECT Months_2021, CustomerID, total_amount, AVG(total_amount) OVER (PARTITION BY CustomerID ORDER BY Months_2021 ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS cumulative_avg
+	FROM monthly_customer_sales ORDER BY CustomerID, Months_2021;
 ---- 11 customer with 2 day or more continuty
 	with cte as(
 	select customerID,OrderDate, lead(OrderDate)over(partition by CustomerID order by OrderDate)as next_date from Orders
@@ -113,4 +115,12 @@ Alter Table Customers ALTER COLUMN DateEntered datetime
 	), cte2 as(
 	select Category_ID, CustomerID, bought, dense_rank()over(partition by Category_ID order by bought desc)as rankg from cte1
 	)select * from cte2 where rankg <=5
+------ 13 Tumbling window
+	SELECT 
+	  TUMBLE_START(order_time, INTERVAL '5' MINUTE) AS window_start,
+	  TUMBLE_END(order_time, INTERVAL '5' MINUTE) AS window_end,
+	  COUNT(*) AS total_orders
+	FROM Orders
+	GROUP BY 
+	  TUMBLE(order_time, INTERVAL '5' MINUTE);
 
