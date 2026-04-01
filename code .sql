@@ -111,7 +111,7 @@ WITH monthly_customer_sales AS ( SELECT MONTH(OrderDate) AS Months_2021, Custome
 select distinct cust_id, order_dt from customer_df
 ), continuity_df as (select *,row_number()over(partition by cust_id order by order_dt)as row from dist_cust_per_day
 ), streak_df as (select *, dateadd(day,-row,order_dt) as gap from continutiy_df
-) select cust_id,count(gap), min(order_dt),max(order_dt) from streak_df group by cust_id,gap having gap=3
+) select cust_id,count(gap), min(order_dt),max(order_dt) from streak_df group by cust_id,gap having gap=2
 
 		
 ---- 12 top 5 customer for each category which join in 2021 
